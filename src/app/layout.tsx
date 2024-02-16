@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import MenuBar from '@/component/MenuBar';
+import MenuBar from '@/components/MenuBar';
+import { LayoutProvider } from '@/components/LayoutContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <MenuBar />
-        {children}
+        <LayoutProvider>
+          <MenuBar />
+          {children}
+        </LayoutProvider>
       </body>
     </html>
   );

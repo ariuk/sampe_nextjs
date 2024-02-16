@@ -10,9 +10,20 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
+import { useGlobal } from '@/components/LayoutContext';
+import { redirect } from 'next/navigation';
+
 export default function MenuBar() {
+  const { globalState, updateGloblaState } = useGlobal();
   const [auth, setAuth] = React.useState({ name: 'User' });
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  React.useEffect(() => {
+    if ((globalState as { authenticated?: boolean })?.authenticated) {
+      redirect('/');
+    }
+  }, [globalState]);
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     //setAuth(event.target.checked);
