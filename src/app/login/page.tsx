@@ -13,34 +13,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useGlobal } from '@/components/LayoutContext';
 import { redirect } from 'next/navigation';
-
-const themeDark = createTheme({
-  palette: {
-    mode: 'dark', // This sets the overall color mode
-    primary: {
-      main: '#90caf9', // Light blue, for primary buttons and links
-      contrastText: '#fff', // White text for contrast against the light blue
-    },
-    secondary: {
-      main: '#f48fb1', // Pink, for secondary buttons and links
-      contrastText: '#fff', // White text for contrast against the pink
-    },
-    error: {
-      main: '#f44336', // Red, for errors
-    },
-    background: {
-      default: '#303030', // Dark grey, for backgrounds
-      paper: '#424242', // Slightly lighter grey, for elements like cards and dialogs
-    },
-    text: {
-      primary: '#fff', // White text for primary content
-      secondary: '#bdbdbd', // Light grey text for secondary content
-    },
-  },
-});
+import { themeDark } from '@/utils';
 
 export default function SignIn() {
   const { globalState, updateGloblaState } = useGlobal();
@@ -56,11 +32,10 @@ export default function SignIn() {
   };
 
   React.useEffect(() => {
-    if ((globalState as { authenticated?: boolean })?.authenticated) {
-      redirect('/');
+    if (globalState.authenticated) {
+      redirect('/home');
     }
   }, [globalState]);
-
 
   return (
     <ThemeProvider theme={themeDark}>
